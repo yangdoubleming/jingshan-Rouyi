@@ -1,0 +1,162 @@
+<template>
+  <div class="app-container">
+    <span style="font-weight:bold">受试者信息配置</span>
+    <el-divider />
+    <div style="display: flex; justify-content: space-between;">
+      <ExamineeDialog type="create" :project-id="projectId" @refresh="queryExamineeCfgList" />
+      <el-button
+        plain
+        type="warning"
+        icon="el-icon-download"
+        @click="handleExport"
+      >导出</el-button>
+    </div>
+
+    <el-table
+      v-loading="loading"
+      :data="examineeCfgList"
+      style="width: 100%; margin-top:  20px;"
+    >
+      <el-table-column
+        prop="fieldNameCn"
+        label="字段名称"
+      />
+      <el-table-column
+        prop="isRequired"
+        label="是否必填"
+      />
+      <el-table-column
+        prop="fieldTypeMsg"
+        label="字段类型"
+      />
+      <el-table-column
+        prop="inputModeMsg"
+        label="输入方式"
+      />
+      <el-table-column
+        prop="fieldLength"
+        label="字段长度"
+      />
+      <el-table-column
+        prop="decimalPrecision"
+        label="小数点精度"
+      />
+      <el-table-column
+        prop="address"
+        label="数值范围"
+      />
+      <el-table-column
+        prop="unit"
+        label="单位"
+      />
+      <el-table-column
+        prop="sort"
+        label="排序"
+      />
+      <el-table-column
+        prop="status"
+        label="状态"
+      />
+      <el-table-column
+        prop="createBy"
+        label="创建人"
+      />
+      <el-table-column
+        prop="address"
+        label="创建时间"
+      />
+      <el-table-column
+        prop="address"
+        label="修改人"
+      />
+      <el-table-column
+        prop="createTime"
+        label="修改时间"
+      />
+      <el-table-column
+        label="操作"
+        width="180"
+      >
+        <template slot-scope="scope">
+          <ExamineeDialog type="update" :project-id="projectId" :data="scope.row" @refresh="queryExamineeCfgList" />
+          <el-switch
+            v-model="scope.row.status"
+            style="margin-left: 20px"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-value="0"
+            inactive-value="1"
+            @change="(status) => {
+              switchExamineeStatus(status, scope.$index, scope.row)
+            }"
+          />
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+import _ from 'lodash'
+import { getExamineeCfgList, setExamineeInfoCfgStatus } from '@/api/project/list'
+import ExamineeDialog from './components/ExamineeDialog'
+export default {
+  components: { ExamineeDialog },
+  props: ['activeName'],
+  data() {
+    return {
+      loading: false,
+      projectId: this.$route.query.id,
+      examineeCfgList: [],
+      switchRequest: false
+    }
+  },
+  watch: {
+    'activeName': function(newValue, oldValue) {
+      if (newValue === 'tester') {
+        this.queryExamineeCfgList()
+      }
+    }
+  },
+  methods: {
+    async queryExamineeCfgList() {
+      try {
+        if (this.loading) return
+        this.loading = true
+        const response = await getExamineeCfgList({ projectId: this.projectId })
+        if (response.code === 200) {
+          this.examineeCfgList = response.rows
+        }
+      } finally {
+        this.loading = false
+      }
+    },
+    async switchExamineeStatus(status, index, item) {
+      try {
+        if (this.switchRequest) return
+        this.switchRequest = true
+        const response = await setExamineeInfoCfgStatus({ id: item.id, status })
+        if (response.code === 200) {
+          this.$message.success(response.msg)
+        }
+      } catch (e) {
+        const list = _.cloneDeep(this.examineeCfgList)
+        list[index].status = status === '1' ? '0' : '1'
+        this.examineeCfgList = [...list]
+      } finally {
+        this.switchRequest = false
+      }
+    },
+    // 受试者信息配置列表导出
+    handleExport() {
+      this.download('/examinee/cfg/export', {
+        projectId: this.projectId
+      }, `post_${new Date().getTime()}.xlsx`)
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

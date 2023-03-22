@@ -1,0 +1,78 @@
+table{
+  border: 1px solid gray;
+  border-collapse: collapse;/*合并单元格边框*/
+  width: 100%;
+  text-align: center;/*居中*/
+}
+th,td{
+  border: 1px solid gray;
+  border: none;/*去除默认边框*/
+  border-bottom: 1px solid gray;
+  text-align: center !important;
+}
+thead th{
+  background-color: white;
+  color: black;
+}
+tbody tr:nth-child(2n){
+  background-color: white;
+  cursor: pointer;
+  color: #909399;
+}
+tbody tr:nth-child(2n-1){
+  background-color: white;
+  cursor: pointer;/*鼠标放上去后变成小手*/
+  color: #909399;
+}
+.tabletitle{
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+.tIntro{
+  font-weight: normal;
+  font-size: 12px;
+}
+.margin{
+  margin-top: 30px;
+}
+.cancel{
+  width: 74px;
+  height: 26px;
+  border-radius: 4.5px;
+  border: 1px solid #eeeeee;
+  line-height: 26px;
+  text-align: center;
+  margin: 30px 10px;
+  float: right;
+  cursor: pointer;
+}
+.sure{
+  width: 74px;
+  height: 26px;
+  border-radius: 4.5px;
+  color: white;
+  background-color: rgb(74, 117, 229);
+  line-height: 26px;
+  text-align: center;
+  margin: 30px 10px;
+  float: right;
+  cursor: pointer;
+}
+.textarea{
+  width: 100%;
+}
+.account{
+  margin: 10px 0;
+}
+.password{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.password1{
+  float: left;
+}
+.redColor{
+  color:red;
+}

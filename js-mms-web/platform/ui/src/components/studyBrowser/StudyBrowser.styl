@@ -1,0 +1,69 @@
+.study-browser
+  float: left
+  height: 100%
+  width: 100%
+  overflow: hidden
+  background-color: black
+  padding-bottom: 20px
+  padding-top: 10px
+
+  .study-menu 
+    margin: 10px 0
+    display: flex
+    justify-content: space-between
+    background-color: #041c4a
+    
+    .study-item
+      cursor: pointer
+      user-select: none
+      width: 50%
+      height: 40px
+      line-height: 40px
+      text-align: center
+      color: white;
+
+      &.active 
+        position: relative
+        background-color: #000
+
+        &::before 
+          content: ' '
+          display: block
+          width: 20%
+          height: 2px
+          background-color: #009dff
+          position: absolute
+          bottom: 0
+          left: 50%
+          transform: translateX(-50%)
+
+
+  .scrollable-study-thumbnails
+    height: 100%
+    overflow-y: auto
+    overflow-x: hidden
+    padding-bottom: 50px
+    padding-right: 16px
+    padding-left: 4px
+    margin-right: -16px
+
+    display: flex;
+    flex-direction: column;
+
+    &::-webkit-scrollbar
+      display: none
+
+    .thumbnail-container
+
+      .noselect
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer */
+        -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+        -webkit-user-select: none; /* Chrome, Safari, and Opera */
+        -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+
+
+.draggable
+  cursor: copy
+  cursor: -webkit-grab
+  cursor: -moz-grab

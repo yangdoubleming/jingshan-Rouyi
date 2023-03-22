@@ -1,0 +1,9 @@
+{
+  "Cancel": "取消",
+  "No hotkeys found": "No hotkeys are configured for this application. Hotkeys can be configured in the application's app-config.js file.",
+  "Reset to Defaults": "返回默认",
+  "ResetDefaultMessage": "Preferences successfully reset to default. <br /> You must <strong>Save</strong> to perform this action.",  
+  "Save": "保存",
+  "SaveMessage": "Preferences saved",
+  "User Preferences": "用户偏好"
+}
